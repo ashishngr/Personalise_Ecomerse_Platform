@@ -9,7 +9,8 @@ AuthHelper.createJWTToken = (payload) => {
             payload, 
             process.env.SECRET_KEY
         )
-        return token; 
+        return token;
+        
     } catch (error) {
        throw error
     }

@@ -50,4 +50,40 @@ AuthController.sighup = async(req, res) => {
         console.log(error); 
         return ErrorUtils.APIErrorResponse(res);
     }
+}; 
+AuthController.login = async(req, res) => {
+    const {email, password} = req.body; 
+    if(!email || !password){
+        return ErrorUtils.APIErrorResponse(res, ERRORS.GENERIC_BAD_REQUEST);
+    }
+    try {
+        let user = await AdminUser.findOne({ email }); 
+        if(!user){
+            return ErrorUtils.APIErrorResponse(res, ERRORS.USER_CREDENTIALS_INVALID)
+        } 
+        const isMatchedPassword = user.securePassword(password) === user.encrypted_password; 
+        if(!isMatchedPassword){
+            return ErrorUtils.APIErrorResponse(res, ERRORS)
+        }; 
+        const payload = {
+            user: {
+                id: user.id, 
+                role: "Admin User"
+            }
+        }; 
+        const accessToken = AuthHelper.createJWTToken(payload); 
+        
+        return res.status(200).json({
+            access_token: accessToken, 
+            message: "User credentials match successfully"
+        })
+    } catch (error) {
+        console.log(error); 
+        return ErrorUtils.APIErrorResponse(res); 
+    }
+}
+
+AuthController.logout = async(req, res) => {
+    const token = req.headers; 
+    console.log(token)
 }
