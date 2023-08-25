@@ -22,6 +22,22 @@ exports.ERRORS = {
     USER_CREDENTIALS_INVALID: {
         status_code: 403, 
         message: "User credentials invalid"
-    }
+    },
+    NO_VISITOR_TOEKN: {
+        status_code: 403, 
+        message: "Visitor token is missing"
+    }, 
+    INVALID_VISITOR_TOKEN: {
+        status_code: 403, 
+        message: "Visitor user toekn invalid"
+    }, 
+    VISITOR_USER_ALREADY_EXISTS: {
+        status_code: 400,
+        message: "Visitor user already exists"
+    }, 
+    VISITOR_USER_CREDENTIALS_INVALID: {
+        status_code: 403, 
+        message: "Visitor User credentials invalid"
+    },
     
 }

@@ -26,8 +26,9 @@ const VisitorUserSchema = new Schema(
             required: true
         }, 
         salt: String, 
-        role_id: {
-            type: mongoose.type.ObjectId,
+        role: {
+            type: String, 
+            default: "VISITOR_USER"
         }, 
         status: {
             type: String, 
@@ -36,7 +37,7 @@ const VisitorUserSchema = new Schema(
         },
         user_profile: {
             type: String
-        }
+        }, 
     },
     {
         collection: "visitorUser", 

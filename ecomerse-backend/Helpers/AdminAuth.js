@@ -1,9 +1,9 @@
 const jwt = require('jsonwebtoken'); 
 const {ERRORS} = require('../Constant'); 
 
-const AuthHelper = module.exports; 
+const AdminAuthHelper = module.exports; 
 
-AuthHelper.createJWTToken = (payload) => {
+AdminAuthHelper.createJWTToken = (payload) => {
     try {
         const token = jwt.sign(
             payload, 
@@ -15,7 +15,7 @@ AuthHelper.createJWTToken = (payload) => {
        throw error
     }
 }
-AuthHelper.validateToken = (req, res, next) =>{
+AdminAuthHelper.validateToken = (req, res) =>{
     let token = req.headers['x-auth-token'];
     if(!token){
         return res.status(403).send(ERRORS.NO_AUTH_TOKEN); 

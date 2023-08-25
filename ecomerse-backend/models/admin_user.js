@@ -31,6 +31,11 @@ const AdminUserSchema = new Schema(
             enum: ["Active", "Draft", "Deleted"], 
             default: "Active"
         },
+        role: {
+            type: String, 
+            enum: ["ADVISOR_ADMIN", "ADMIN_USER"], 
+            default: "ADMIN_USER"
+        }, 
         user_profile: {
             type: String
         }
