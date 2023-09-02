@@ -2,46 +2,59 @@ import React,{useState, useEffect} from 'react';
 import axios from "axios";
 import {useLocation, Navigate} from 'react-router-dom';
 import {BiShow, BiHide} from 'react-icons/bi'
+import validateEmail from "../utils/validate_email";
+import validatePassword from "../utils/validate_password"; 
+
+const CONSTANTS = require("../common/constant");
+
 
 const Signup = () => {
-    const [showPassword, setShowPassword] = useState(false);
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-    const [formData, setFormData] = useState({
+    const [data, setData] = useState({
         first_name: "", 
         last_name: "", 
         email: "", 
         password: ""
-    })
+    }); 
 
-    const handleShowPassword =()  =>{
-        setShowPassword(preve => !preve)
-    }
+    const handleChange = (e) => {
+        const {name, value} = e.target; 
+        setData((preve)=>{
+            return {
+                ...preve,
+                [name]: value
+            }
+        })
+    };
 
-    const handleShowConfirmPassword = () =>{
-        setShowConfirmPassword(preve => !preve)
-    }
+    console.log("--", CONSTANTS.API_BASE_URL)
 
-   const handleChange = (e) => {
-    const {name, value} = e.target; 
-    setFormData((preve)=>{
-        return {
-            ...preve, 
-            [name]: value
+    const handleSubmit = async(e) => {
+        e.preventDefault(); 
+        try {
+            const {first_name, last_name , email, password} = data;
+            if(first_name && last_name && email && password){
+                console.log("email", email)
+                console.log("password", password)
+
+                if(!validateEmail(email) && !validatePassword(password)){
+                    alert("Please enter a valid email or password");
+                }else{
+                        const response = await axios.post(`http://localhost:8080/api/v1/signup`, data);
+                        if(response.status === 200){
+                            setData({
+                                first_name: "", 
+                                last_name: "", 
+                                email: "", 
+                                password: ""
+                            })
+                        }
+                }
+            }
+        } catch (error) {
+            console.log(error);
         }
-    })
-   }
-
-
-
-   const handleSubmit = async(e) => {
-   
-   }
-
-
-
-   
-
+    }
   return (
     <div className='flex flex-col bg-sky-100 min-h-full justify-center h-screen'>
         <div className='flex justify-center font-mono text-2xl pt-18'>
@@ -61,12 +74,13 @@ const Signup = () => {
                     <div className="">
                         <input
                         id="first_name"
-                        name="First Name"
+                        name="first_name"
                         type="text"
-                        autoComplete="firstName"
-                       
                         required
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        value={data.first_name}
+                        onChange={handleChange}
+
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         />
                     </div>
                 </div>
@@ -77,12 +91,12 @@ const Signup = () => {
                     <div className="">
                         <input
                         id="lastName"
-                        name="Last_name"
+                        name="last_name"
                         type="text"
-                        autoComplete="lastName"
                         required
-                        
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        value={data.last_name}
+                        onChange={handleChange}
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         />
                     </div>
                 <div>
@@ -92,14 +106,17 @@ const Signup = () => {
                     <div className="">
                         <input
                         id="email"
-                        name="Last Name"
+                        name="email"
                         type="text"
                         autoComplete="email"
                         required
-                       
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        value={data.email}
+                        onChange={handleChange}
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         />
                     </div>
+                </div>
+                <div>  
                     <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
                         Password
                     </label>
@@ -107,35 +124,15 @@ const Signup = () => {
                         <input
                         id="password"
                         name="password"
-                        type="text"
+                        type="password"
                         autoComplete="password"
                         required
-                       
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-200 sm:text-sm sm:leading-6"
+                        value={data.password}
+                        onChange={handleChange}
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         />
-                        <span className='flex text-4xl cursor-pointer' onClick={handleShowPassword}>{ showPassword ? <BiShow/> : <BiHide />}</span>
                     </div>
-                </div>
-                <div>
-                    <label htmlFor="confirmPassword" className="block text-sm font-medium leading-6 text-gray-900">
-                        Confirm Password
-                    </label>
-                    <div className="flex px-2 py-1 bg-white rounded mb-2 ">
-                        <input
-                        id="passwprd"
-                        name="Password"
-                        type="text"
-                        autoComplete="password"
-                        required
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-200 sm:text-sm sm:leading-6"
-                        />
-                        <span
-                        className="flex text-4xl cursor-pointer"
-                        onClick={handleShowConfirmPassword}
-                        >
-                        {showConfirmPassword ? <BiShow /> : <BiHide />}
-                        </span>
-                    </div>
+                    <p id="helper-text-explanation" className="mt-2 text-sm text-gray-500 dark:text-gray-400">Password must conatin at least one uppercase, lowecase, one numbaer and one special character.</p>
                 </div>
                 <div className='mt-8'>
                 <button
