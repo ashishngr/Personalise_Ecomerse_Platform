@@ -1,5 +1,6 @@
-import React, {useState} from 'react'; 
+import React, {useEffect, useState} from 'react'; 
 import API from "../common/apis"; 
+import {useNavigate} from 'react-router-dom';
 
 // const API = require("../common/apis")
 
@@ -7,10 +8,15 @@ import API from "../common/apis";
 const StorageUtils = require("../utils/storage_utils");
 
 const Login = () => {
+
+
   const [data, setData] = useState({
     email: "", 
     password: ""
-  }); 
+  });
+  
+  const navigate = useNavigate();
+  let token = localStorage.getItem("access_token"); 
 
   const handleChange = (e) => {
     const {name, value} = e.target; 
@@ -21,6 +27,14 @@ const Login = () => {
         }
     })
   };
+
+  
+  useEffect(()=>{
+      if(token){
+        navigate("/admin/dashboard")
+      }
+  },[]); 
+
   const handleSubmit = (e) =>{
     e.preventDefault();
     try {
@@ -34,6 +48,7 @@ const Login = () => {
           let accessToken = response.data.access_token
           if(response.status === 200){
             StorageUtils.setAPIToken(accessToken);
+            navigate("/admin/dashboard", {replace: true})
           }
         })
       }
