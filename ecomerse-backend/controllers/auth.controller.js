@@ -18,7 +18,6 @@ AuthController.sighup = async(req, res) => {
     try {
         const {first_name, last_name, email, password, role} = req.body; 
         let adminUser = await AdminUser.findOne({email});
-        console.log("admin user", adminUser); 
         if(!EmailUtils.isValidEmail(email)){
             return ErrorUtils.APIErrorResponse(res, ERRORS.GENERIC_BAD_REQUEST);
         }
