@@ -10,5 +10,11 @@ export default function RequireAuth({children}){
     let token = localStorage.getItem("access_token"); 
     if(!token){
         return <Navigate to="/" state={{from: location}} replace/>
+    }else{
+        return (
+            <div>
+                {children}
+            </div>
+        )
     }
 }

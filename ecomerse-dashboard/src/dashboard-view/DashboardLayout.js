@@ -1,15 +1,19 @@
 import React from 'react'
+import DashboardSidebar from './DashboardSidebar'; 
 import { Outlet } from 'react-router-dom';
 
-import DashboardSidebar from './DashboardSidebar';
-const DashboardLayout = () => {
+export const DashboardLayout = () => {
   return (
-    <div className='flex min-h-full overflow-hidden'>
-       <DashboardSidebar />
-        <div className='flex-grow-1 overflow-auto min-h-full pt-20 '>
+    <div className='flex flex-row w-screen h-full gap-x-72 bg-slate-50'>
+        <div>
+            <DashboardSidebar />
+        </div>
+        <div>
             <Outlet />
         </div>
+        
+        
+       
     </div>
   )
 }
-export default DashboardLayout

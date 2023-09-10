@@ -4,8 +4,20 @@ import {RiProductHuntFill} from 'react-icons/ri';
 import {ImProfile} from 'react-icons/im'; 
 import {FaSignInAlt} from 'react-icons/fa'; 
 import {FaSignOutAlt} from 'react-icons/fa'; 
+import {useNavigate} from 'react-router-dom';
+
+
+const StorageUtils = require("../utils/storage_utils"); 
 
 const DashboardSidebar = () => {
+
+    const navigate = useNavigate(); 
+
+    const handleLogout = (e) => {
+        e.preventDefault(); 
+        StorageUtils.removeAll(); 
+        navigate("/login");
+    }
   return (
     <div className='fixed x-0 y-0 z-40 flex flex-col bg-gray-50 w-1/6 drop-shadow-sm min-h-screen '>
        {/* User Prifile and user name */}
@@ -22,37 +34,33 @@ const DashboardSidebar = () => {
         <div className='flex flex-col mt-24 font-mono text-xl overflow-y-auto '>  
             <ul className='space-y-2 font-medium'>
                 <li className=''>
-                    <a href='/' className='flex flex-row items-center pl-6 py-2 text-gray-900 rounded-lg hover:bg-gray-100 group'>
+                    <a href='/admin/dashboard' className='flex flex-row items-center pl-6 py-2 text-gray-900 rounded-lg hover:bg-gray-100 group'>
                         <LuLayoutDashboard className=''/>
                        <pan className="ml-3 ">Dashboard</pan>
                     </a>
                     
                 </li>
                 <li>
-                    <a href='/' className='flex flex-row items-center pl-6 py-2 text-gray-900 rounded-lg hover:bg-gray-100 group'>
+                    <a href='/admin/product' className='flex flex-row items-center pl-6 py-2 text-gray-900 rounded-lg hover:bg-gray-100 group'>
                         <RiProductHuntFill className=''/>
                         <pan className="ml-3 ">Product</pan>
                     </a>
                 </li>
                 <li>
-                    <a href='/' className='flex flex-row items-center pl-6 py-2 text-gray-900 rounded-lg hover:bg-gray-100 group'>
+                    <a href='/admin/profile' className='flex flex-row items-center pl-6 py-2 text-gray-900 rounded-lg hover:bg-gray-100 group'>
                         <ImProfile className=''/>
                         <pan className="ml-3 ">Profile</pan>
                     </a>
                 </li>
                 <li>
                 </li>
+                
                 <li>
-                    <a href='/' className='flex flex-row items-center pl-6 py-2 text-gray-900 rounded-lg hover:bg-gray-100 group'>
-                        <FaSignInAlt className=''/>
-                        <pan className="ml-3 ">SignIn </pan>
-                    </a>
-                </li>
-                <li>
-                    <a href='/' className='flex flex-row items-center pl-6 py-2 text-gray-900 rounded-lg hover:bg-gray-100 group'>
+                    <div className='flex flex-row items-center pl-6 py-2 text-gray-900 rounded-lg hover:bg-gray-100 group cursor-pointer' 
+                    onClick={(e)=>handleLogout(e)}>
                         <FaSignOutAlt className=''/>
                         <pan className="ml-3 ">SignOut</pan>
-                    </a>
+                    </div>
                 </li>
             </ul>
         </div>

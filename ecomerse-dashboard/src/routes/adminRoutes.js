@@ -1,24 +1,48 @@
 import { Route, Routes } from "react-router-dom";
 import RequireAuth from "./RequireAuth";
-import DashboardLayout from "../dashboard-view/DashboardLayout";
-import ErrorPage from "../pages/ErrorPage";
 import ProductList from "../pages/product/ProductList";
+import { DashboardLayout } from "../dashboard-view/DashboardLayout";
+import Profile from "../pages/profile/Profile";
+import Dashboard from "../pages/dashboard/Dashboard";
+import AddAndUpdateProduct from "../pages/product/AddAndUpdateProduct";
+
 
 const adminRoutesWrapper = () => {
     return(
         <Routes>
-            <Route path="*" element={<ErrorPage />}/>
-            <Route path="/" element={<DashboardLayout/>}>
+            <Route path="/" element={<DashboardLayout />}> 
+
                 <Route 
-                path="/product" element={
+                path="dashboard" element={
+                    <RequireAuth>
+                        <Dashboard />
+                    </RequireAuth>
+                    
+                }/>
+
+                <Route 
+                path="product" element={
                     <RequireAuth>
                         <ProductList />
                     </RequireAuth>
                 }/>
-            </Route>
-            
-            
-            
+                <Route 
+                    path="product/add"
+                    element={
+                        <RequireAuth>
+                            <AddAndUpdateProduct/>
+                        </RequireAuth>
+                    }
+                />
+                    
+                
+                <Route 
+                path="profile"
+                element={<RequireAuth>
+                    <Profile />
+                </RequireAuth>}/>
+
+            </Route>    
         </Routes>
     )
 }

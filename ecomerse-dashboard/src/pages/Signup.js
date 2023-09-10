@@ -4,11 +4,14 @@ import {useLocation, Navigate} from 'react-router-dom';
 import {BiShow, BiHide} from 'react-icons/bi'
 import validateEmail from "../utils/validate_email";
 import validatePassword from "../utils/validate_password"; 
+import {useNavigate} from 'react-router-dom';
 
 const CONSTANTS = require("../common/constant");
 
 
 const Signup = () => {
+
+    const navigate = useNavigate();
 
     const [data, setData] = useState({
         first_name: "", 
@@ -48,6 +51,7 @@ const Signup = () => {
                                 email: "", 
                                 password: ""
                             })
+                            navigate("/login"); 
                         }
                 }
             }
