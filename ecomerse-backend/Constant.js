@@ -39,5 +39,13 @@ exports.ERRORS = {
         status_code: 403, 
         message: "Visitor User credentials invalid"
     },
+    NO_ADMIN_USER_EXISTS: {
+        status_code: 403, 
+        message: "no admin user exists"
+    }, 
+    NO_PRODUCT_EXISTS: {
+        status: 403, 
+        message: "no product found"
+    }
     
 }

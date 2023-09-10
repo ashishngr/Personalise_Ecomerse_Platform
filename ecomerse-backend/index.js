@@ -24,6 +24,7 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true})
 
 // TODO: Import all routes Routes; 
 const authRoutes = require("./routes/auth_routes");
+const adminRoutes = require("./routes/adminRoutes")
 
 // Use of middleware
 app.use(cors()); 
@@ -35,6 +36,8 @@ app.use(cookieParser());
 
 // TODO: Routes
 app.use("/api/v1", authRoutes); 
+app.use("/api/v1", adminRoutes); 
+
 
 
 app.listen(PORT,()=> console.log("Server is running on port:" + PORT))

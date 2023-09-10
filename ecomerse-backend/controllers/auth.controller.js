@@ -55,6 +55,8 @@ AuthController.sighup = async(req, res) => {
 }; 
 AuthController.login = async(req, res) => {
     const {email, password} = req.body; 
+    console.log("--", email, password); 
+
     if(!email || !password){
         return ErrorUtils.APIErrorResponse(res, ERRORS.GENERIC_BAD_REQUEST);
     }
@@ -65,7 +67,7 @@ AuthController.login = async(req, res) => {
         } 
         const isMatchedPassword = user.securePassword(password) === user.encrypted_password; 
         if(!isMatchedPassword){
-            return ErrorUtils.APIErrorResponse(res, ERRORS)
+            return ErrorUtils.APIErrorResponse(res, ERRORS.USER_CREDENTIALS_INVALID);
         }; 
         const payload = {
             user: {
