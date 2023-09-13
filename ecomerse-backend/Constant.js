@@ -44,8 +44,12 @@ exports.ERRORS = {
         message: "no admin user exists"
     }, 
     NO_PRODUCT_EXISTS: {
-        status: 403, 
+        status_code: 403, 
         message: "no product found"
+    }, 
+    PAGINATION_ERRO: {
+        status_code: 403, 
+        message: "Pagination error"
     }
     
 }

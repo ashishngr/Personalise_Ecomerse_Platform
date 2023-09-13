@@ -87,7 +87,7 @@ ProductController.deleteProduct = async(req, res) => {
     try {
         const productId = req.params.id; 
         const creatorAdminId = req.user.id; 
-        const product = Product.findOne({$and:[
+        const product = await Product.findOne({$and:[
             {_id: productId}, 
             {creator_admin_id: creatorAdminId}
         ]})
@@ -101,5 +101,67 @@ ProductController.deleteProduct = async(req, res) => {
     } catch (error) {
        console.log(error); 
        return ErrorUtils.APIErrorResponse(res) 
+    }
+}; 
+ProductController.getAllProduct = async(req, res) => {
+    try {
+        const creatorAdminId = req.user.id; 
+        const adminUser = await AdminUser.find({creator_admin_id: creatorAdminId}); 
+        if(!adminUser){
+            returnErrorUtils.APIErrorResponse(res, ERRORS.NO_ADMIN_USER_EXISTS);
+        }
+        var {limit, page} = req.query; 
+        if(!page || !limit){
+            return ErrorUtils.APIErrorResponse(res, ERRORS.PAGINATION_ERRO);
+        }
+        page = page || 1; 
+        limit = limit || 5; 
+        let skip = (page - 1) * limit; 
+
+        let query = {creator_admin_id: creatorAdminId}; 
+        const productList = Product.aggregate([
+            {
+                $match : query
+            }, 
+            {
+                $sort: 1
+            }, 
+            {
+                $skip: skip
+            }, 
+            {
+                $limit: parseInt(limit)
+            }
+        ]); 
+        const count =await Product.countDocuments(query); 
+        const result = {
+            data : productList, 
+            totalProduct : count, 
+            currentPage: page
+        }; 
+        res.status(200).json(result);
+    } catch (error) {
+        console.log(error);
+        return ErrorUtils.APIErrorResponse(res); 
+    }
+}
+ProductController.getProductById = async(req, res) => {
+    try {
+        let productId = req.params.id; 
+    const creatorAdminId = req.user.id; 
+    const product = await Product.findOne({$and:[
+        {_id: productId}, 
+        {creator_admin_id: creatorAdminId}
+    ]})
+    if(!product){
+        return res.ErrorUtils.APIErrorResponse(res, ERRORS.NO_PRODUCT_EXISTS)
+    }
+    res.status(200).json({
+        data: product, 
+        message: "Product find succeessfully"
+    })
+    } catch (error) {
+        console.log(error); 
+        return ErrorUtils.APIErrorResponse(res); 
     }
 }

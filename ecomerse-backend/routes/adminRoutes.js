@@ -1,10 +1,17 @@
 var express = require("express"); 
 var router = express.Router(); 
+exports.router = router;
 
-const AuthHelper = require("../Helpers/AdminAuth");
-const ProcutController = require("../controllers/product.controller"); 
+const AdminAuthHelper  = require("../Helpers/AdminAuth");
+const ProductController = require("../controllers/product.controller"); 
 
-router.post("/product", AuthHelper.validateToken, ProcutController.addProduct); 
 
+let validateToken = AdminAuthHelper.validateToken; 
+
+
+router.post("/product", validateToken, ProductController.addProduct); 
+router.post("/product/:id", validateToken, ProductController.updateProduct); 
+router.delete("/product/:id", validateToken, ProductController.deleteProduct); 
+router.get("/product", validateToken, ProductController.getAllProduct);  
 
 module.exports = router; 
