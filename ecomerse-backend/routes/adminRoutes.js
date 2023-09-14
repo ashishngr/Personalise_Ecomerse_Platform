@@ -13,5 +13,7 @@ router.post("/product", validateToken, ProductController.addProduct);
 router.post("/product/:id", validateToken, ProductController.updateProduct); 
 router.delete("/product/:id", validateToken, ProductController.deleteProduct); 
 router.get("/product", validateToken, ProductController.getAllProduct);  
+router.get("/product/:id", validateToken, ProductController.getProductById);  
+
 
 module.exports = router; 

@@ -6,7 +6,7 @@ var ObjectId = mongoose.Types.ObjectId;
 const ProductController = module.exports; 
 
 const { ERRORS } = require("../Constant"); 
-const ErrorUtils = require("../Utils/email_utils")
+const ErrorUtils = require("../Utils/error_utils")
 
 ProductController.addProduct = async(req, res)=>{
     var {name, price, quantity, category, description, tags, retrunPolicy, state, image} = req.body; 
@@ -15,6 +15,7 @@ ProductController.addProduct = async(req, res)=>{
     }
     try {
         const creatorAdminId = req.user.id; 
+        console.log("creatorAdminId", creatorAdminId)
         const creatorAdmin = await AdminUser.findOne({_id: creatorAdminId}); 
         if(!creatorAdmin){
             return ErrorUtils.APIErrorResponse(res, ERRORS.NO_ADMIN_USER_EXISTS)
@@ -22,6 +23,7 @@ ProductController.addProduct = async(req, res)=>{
         let product = {};
         product = new Product({
             name : name, 
+            creator_admin_id: req.user.id,
             price: price, 
             quantity: quantity, 
             category: category, 
@@ -31,6 +33,7 @@ ProductController.addProduct = async(req, res)=>{
             state: state, 
             image: image
         })
+        console.log("--", product)
         await product.save(); 
         return res.status(200).json({
             data: product, 
@@ -57,7 +60,7 @@ ProductController.updateProduct = async(req, res) => {
         if(!name && !price && !quantity && !category && !description && !tags & !retrunPolicy && !state && !image){
             return ErrorUtils.APIErrorResponse(res, ERRORS.GENERIC_BAD_REQUEST);
         }
-        await Product.findByIdAndUpdate(productId, {
+        let updatedProduct = await Product.findByIdAndUpdate(productId, {
             name : name, 
             price: price, 
             quantity: quantity, 
@@ -67,15 +70,12 @@ ProductController.updateProduct = async(req, res) => {
             retrunPolicy: retrunPolicy, 
             state: state, 
             image: image
-        }, function (err, data){
-            if(err){
-                return ErrorUtils.APIErrorResponse(res)
-            }else{
-                return res.status(200).json({
-                    data: data, 
-                    message: "Product updated successfully"
-                })
-            }
+        }, 
+        {new: true}
+        )
+        return res.status(200).json({
+            data: updatedProduct, 
+            message: "Product update successfully"
         })
 
     } catch (error) {
@@ -118,13 +118,10 @@ ProductController.getAllProduct = async(req, res) => {
         limit = limit || 5; 
         let skip = (page - 1) * limit; 
 
-        let query = {creator_admin_id: creatorAdminId}; 
-        const productList = Product.aggregate([
+        let query = {creator_admin_id: new ObjectId(creatorAdminId)}; 
+        const productList = await Product.aggregate([
             {
                 $match : query
-            }, 
-            {
-                $sort: 1
             }, 
             {
                 $skip: skip
@@ -139,7 +136,7 @@ ProductController.getAllProduct = async(req, res) => {
             totalProduct : count, 
             currentPage: page
         }; 
-        res.status(200).json(result);
+        return res.status(200).json(result);
     } catch (error) {
         console.log(error);
         return ErrorUtils.APIErrorResponse(res); 

@@ -8,7 +8,8 @@ const ProductSchema = new Schema(
             require: true, 
         }, 
         creator_admin_id: {
-            admin_id: mongoose.Types.ObjectId
+            type: mongoose.Types.ObjectId,
+            require: true,
         },
         price: {
             type: Number, 
@@ -55,3 +56,7 @@ const ProductSchema = new Schema(
 ); 
 
 const Product = mongoose.model("Product", ProductSchema); 
+
+module.exports = {
+    Product
+}; 
