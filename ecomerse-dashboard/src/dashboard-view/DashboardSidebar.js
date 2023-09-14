@@ -19,7 +19,7 @@ const DashboardSidebar = () => {
         navigate("/login");
     }
   return (
-    <div className='fixed x-0 y-0 z-40 flex flex-col bg-gray-50 w-1/6 drop-shadow-sm min-h-screen '>
+    <div className='fixed x-0 y-0 z-40 flex flex-col bg-slate-500 w-1/6 drop-shadow-sm min-h-screen '>
        {/* User Prifile and user name */}
       
        <div className='flex flex-col items-center'>
@@ -34,20 +34,20 @@ const DashboardSidebar = () => {
         <div className='flex flex-col mt-24 font-mono text-xl overflow-y-auto '>  
             <ul className='space-y-2 font-medium'>
                 <li className=''>
-                    <a href='/admin/dashboard' className='flex flex-row items-center pl-6 py-2 text-gray-900 rounded-lg hover:bg-gray-100 group'>
+                    <a href='/admin/dashboard' className='flex flex-row items-center pl-6 py-2 text-white rounded-lg hover:bg-slate-600 group'>
                         <LuLayoutDashboard className=''/>
                        <pan className="ml-3 ">Dashboard</pan>
                     </a>
                     
                 </li>
                 <li>
-                    <a href='/admin/product' className='flex flex-row items-center pl-6 py-2 text-gray-900 rounded-lg hover:bg-gray-100 group'>
+                    <a href='/admin/product' className='flex flex-row items-center pl-6 py-2 text-white rounded-lg hover:bg-slate-600 group'>
                         <RiProductHuntFill className=''/>
                         <pan className="ml-3 ">Product</pan>
                     </a>
                 </li>
                 <li>
-                    <a href='/admin/profile' className='flex flex-row items-center pl-6 py-2 text-gray-900 rounded-lg hover:bg-gray-100 group'>
+                    <a href='/admin/profile' className='flex flex-row items-center pl-6 py-2 text-white rounded-lg hover:bg-slate-600 group'>
                         <ImProfile className=''/>
                         <pan className="ml-3 ">Profile</pan>
                     </a>
@@ -56,7 +56,7 @@ const DashboardSidebar = () => {
                 </li>
                 
                 <li>
-                    <div className='flex flex-row items-center pl-6 py-2 text-gray-900 rounded-lg hover:bg-gray-100 group cursor-pointer' 
+                    <div className='flex flex-row items-center pl-6 py-2 text-white rounded-lg hover:bg-slate-600 group cursor-pointer' 
                     onClick={(e)=>handleLogout(e)}>
                         <FaSignOutAlt className=''/>
                         <pan className="ml-3 ">SignOut</pan>

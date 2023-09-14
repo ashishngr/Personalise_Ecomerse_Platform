@@ -4,7 +4,7 @@ import { Outlet } from 'react-router-dom';
 
 export const DashboardLayout = () => {
   return (
-    <div className='flex flex-row w-screen h-full gap-x-72 bg-slate-50'>
+    <div className='flex flex-row min-h-screen space-x-72 bg-slate-300 scroll-smooth'>
         <div>
             <DashboardSidebar />
         </div>
