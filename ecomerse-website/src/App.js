@@ -5,7 +5,7 @@ function App() {
   return (
    <BrowserRouter> 
     <Routes>
-      <Route path='/my-ecomerse/*' element={<EcomerseRoutes />}/>
+      <Route path='/easy-shoping/*' element={<EcomerseRoutes />}/>
     </Routes>
    </BrowserRouter>
   );
