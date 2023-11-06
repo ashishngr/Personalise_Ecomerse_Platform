@@ -15,28 +15,28 @@ const MensData = [
     itemName: "Pant", 
     image: "Pant - Image",
     price: "500", 
-    category: "Mens Clothing", 
+    category: "MensClothing", 
     description: "xyx - company || abc || color - abc || abc"
   }, 
   {
     itemName: "Shirt", 
     image: "shirt - Image",
     price: "500", 
-    category: "Mens Clothing", 
+    category: "MensClothing", 
     description: "xyx - company || abc || color - abc || abc"
   }, 
   {
     itemName: "Trowser", 
     image: "trowser - Image",
     price: "500", 
-    category: "Mens Clothing", 
+    category: "MensClothing", 
     description: "xyx - company || abc || color - abc || abc"
   }, 
   {
     itemName: "Kurta", 
     image: "Kurta - Image",
     price: "100", 
-    category: "Mens Clothing", 
+    category: "MensClothing", 
     description: "xyx - company || abc || color - abc || abc"
   }
 ]
