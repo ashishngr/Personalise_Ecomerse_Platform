@@ -1,7 +1,8 @@
 import React from 'react'
 import Navbar from '../components/Navbar'; 
 import HomepageCarousel from '../components/HomepageCarousel';
-import ItemsSection from '../components/ItemsSection';
+import HomeItemList from '../components/HomeItemList';
+import Footer from '../components/Footer';
 
 const MensData = [
   {
@@ -42,17 +43,17 @@ const MensData = [
 ]
 const Homepage = () => {
   return (
-    <div className='bg-gray-200'>
+    <div className='bg-white'>
       <Navbar />
       <div className='h-48 px-6 my-2'>
         <HomepageCarousel />
       </div>
-      <div>
-        <ItemsSection 
-        categoryName="Mens"
-        data={MensData}/>
-      </div>
-
+     <div>
+      <HomeItemList />
+     </div>
+     <div>
+      <Footer />
+     </div>
     </div>
   )
 }
